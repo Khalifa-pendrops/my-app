@@ -7,6 +7,53 @@
   pointer-events: none;
 }
 
+.App {
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.task-input {
+  margin-bottom: 20px;
+  
+}
+
+input{
+  margin-right: 5px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  width: 600px;
+  margin: 0 auto;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+li span {
+  margin-right: 10px;
+}
+
+li input {
+  flex: 1;
+  margin-right: 10px;
+}
+
+li button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+
+
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -36,3 +83,6 @@
     transform: rotate(360deg);
   }
 }
+
+
+
