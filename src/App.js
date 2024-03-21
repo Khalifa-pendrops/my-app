@@ -3,12 +3,14 @@ import "./App.css";
 
 function App() {
   const [tasks, setTasks] = useState(() => {
+    // Load tasks from local storage at the start
     const savedTasks = localStorage.getItem("tasks");
     return savedTasks ? JSON.parse(savedTasks) : [];
   });
   const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
+    // Save tasks to local storage whenever tasks change
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
@@ -26,8 +28,7 @@ function App() {
   };
 
   const handleEditTask = (index, newText) => {
-    const newTasks = [...tasks];
-    newTasks[index] = newText.trim();
+    const newTasks = tasks.map((task, i) => (i === index ? newText : task));
     setTasks(newTasks);
   };
 
@@ -66,4 +67,3 @@ function App() {
 }
 
 export default App;
-
