@@ -1,14 +1,27 @@
-import React, { useState } from 'react';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import "./App.css";
 
 function App() {
-  const [tasks, setTasks] = useState([]);
-  const [inputValue, setInputValue] = useState('');
+  const [tasks, setTasks] = useState(() => {
+    const savedTasks = localStorage.getItem("tasks");
+    return savedTasks ? JSON.parse(savedTasks) : [];
+  });
+  const [inputValue, setInputValue] = useState("");
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   const handleAddTask = () => {
-    if (inputValue.trim() !== '') {
-      setTasks([...tasks, inputValue.trim()]);
-      setInputValue('');
+    if (inputValue.trim() !== "") {
+      setTasks((prevTasks) => [...prevTasks, inputValue.trim()]);
+      setInputValue("");
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleAddTask();
     }
   };
 
@@ -19,9 +32,7 @@ function App() {
   };
 
   const handleDeleteTask = (index) => {
-    const newTasks = [...tasks];
-    newTasks.splice(index, 1);
-    setTasks(newTasks);
+    setTasks((prevTasks) => prevTasks.filter((_, i) => i !== index));
   };
 
   return (
@@ -32,6 +43,7 @@ function App() {
           type="text"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
+          onKeyPress={handleKeyPress}
           placeholder="Please enter task here..."
         />
         <button onClick={handleAddTask}>Add Task</button>
@@ -39,7 +51,7 @@ function App() {
       <ul>
         {tasks.map((task, index) => (
           <li key={index}>
-            <span>{index + 1}</span>
+            <span>{index + 1}. </span>
             <input
               type="text"
               value={task}
@@ -54,3 +66,4 @@ function App() {
 }
 
 export default App;
+
